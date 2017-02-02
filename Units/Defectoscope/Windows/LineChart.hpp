@@ -66,8 +66,8 @@ template<class T, int N>struct Line: LineTresholdsViewer<typename TL::SelectT<Th
 			if(TL::IndexOf<ColorTable::items_list, Clr<Undefined>>::value != dataViewer.status[offsetX])
 			{
 				char val[128];
-				sprintf(val, "%.2f", valY);
-				for(char *ss = val; *ss; ++ss){if('.' == *ss){ss += 2;*ss = '\0';break;}}
+				sprintf(val, "%.1f", valY);
+			//	for(char *ss = val; *ss; ++ss){if('.' == *ss){ss += 2;*ss = '\0';break;}}
 				wsprintf(label.buffer, L"<ff>Зона <ff0000>%d <ff>датчик <ff0000>%d <ff>смещение %d  величина %S   %S     "
 					, 1 + owner->lastZone, 1 + N, 1 + offsetX, val, s);
 			}
@@ -203,11 +203,11 @@ namespace
 			if(d->hdr.G1Tof)
 			{
 				double tmp = 2.5e-6 * d->hdr.G1Tof * t.param[d->Channel].get<gate1_TOF_WT_velocity>().value;
-				wsprintf(s1, L"<ff>толщина1 <ffffff>%s", OneDigit(tmp)());
+				wsprintf(s1, L"<ff>толщина1 <ffffff>%s", Wchar_from<double, 1>(tmp)());
 				if(d->hdr.G2Tof)
 				{
 					double tmp = 2.5e-6 * d->hdr.G2Tof * t.param[d->Channel].get<gate2_TOF_WT_velocity>().value;
-					wsprintf(s2, L"<ff>толщина2 <ffffff>%s", OneDigit(tmp)());
+					wsprintf(s2, L"<ff>толщина2 <ffffff>%s", Wchar_from<double, 1>(tmp)());
 				}
 			}
 			wsprintf(buffer, L"%s %s" , s1, s2);

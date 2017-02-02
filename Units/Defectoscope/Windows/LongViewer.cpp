@@ -46,7 +46,7 @@ bool LongViewer::Draw(TMouseMove &l, VGraphics &g)
 		wchar_t buf[128];
 		if(b)
 		{
-			wsprintf(buf, L"<ff>значение <ff0000>%s", Wchar_from<double>(viewerData.buffer[y][x])());
+			wsprintf(buf, L"<ff>значение <ff0000>%s", Wchar_from<double, 1>(viewerData.buffer[y][x])());
 		}
 		else
 		{

@@ -18,12 +18,12 @@ namespace
 		for(int i = 0; i < data.currentOffsetZones; ++i)
 		{
 			char minV[32] = {};
-			sprintf(minV, "%.2f", data.bufferMin[i]);
-			for(char *ss = minV; *ss; ++ss){if('.' == *ss){ss += 2;*ss = '\0';break;}}
+			sprintf(minV, "%.1f", data.bufferMin[i]);
+		//	for(char *ss = minV; *ss; ++ss){if('.' == *ss){ss += 2;*ss = '\0';break;}}
 
 			char maxV[32] = {};
-			sprintf(maxV, "%.2f", data.bufferMax[i]);
-			for(char *ss = maxV; *ss; ++ss){if('.' == *ss){ss += 2;*ss = '\0';break;}}
+			sprintf(maxV, "%.1f", data.bufferMax[i]);
+		//	for(char *ss = maxV; *ss; ++ss){if('.' == *ss){ss += 2;*ss = '\0';break;}}
 
 			fwprintf(f, L"<Zone>\n<NumberZone>%d</NumberZone>\n<MinVal>%S</MinVal>\n<MaxVal>%S</MaxVal>\n</Zone>\n"
 				, 1 + i

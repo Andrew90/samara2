@@ -1,5 +1,6 @@
 #pragma once
 #include <windows.h>
+#include <math.h>
 #include <comutil.h>
 #include "templates/typelist.hpp"
 //////////////////////////////////////////////////////////////////////
@@ -208,26 +209,49 @@ template<int NUM>struct Wchar_from<double, NUM>
 	}
 };
 #pragma warning(disable : 4996)
-struct OneDigit
+template<>struct Wchar_from<double, 1>
 {
-	wchar_t buf[64];
-	OneDigit(){buf[0] = 0;}
-	OneDigit(double n)
+	wchar_t buf[32];
+	Wchar_from(double data)
 	{
-		(*this)(n);
+		(*this)(data);
 	}
-	wchar_t *operator()(){return buf;}		
-	wchar_t *operator()(double n)
+	wchar_t *operator()(){return buf;}
+	wchar_t *operator()(double data)
 	{
-		char xbuf[dimention_of(buf)];
-		sprintf(xbuf, "%.2f", n);
-		char *s = xbuf;
-		for(; *s; ++s){if('.' == *s){s += 2;*s = '\0';break;}}
+		char c[32];
+		sprintf(c, "%.1f", data);
 		size_t ConvertedChars;
-		mbstowcs_s(&ConvertedChars, buf, xbuf, s - xbuf);
+		mbstowcs_s(&ConvertedChars, buf, c, 32);
 		return buf;
-	}	
+	}
 };
+
+//struct OneDigit
+//{
+//	wchar_t buf[64];
+//	OneDigit(){buf[0] = 0;}
+//	OneDigit(double n)
+//	{
+//		(*this)(n);
+//	}
+//	wchar_t *operator()(){return buf;}		
+//	wchar_t *operator()(double n)
+//	{
+//		char xbuf[dimention_of(buf)];
+//		sprintf(xbuf, "%.2f", n);
+//		char *s = xbuf;
+//		for(; *s; ++s){if('.' == *s){s += 2;*s = '\0';break;}}
+//		size_t ConvertedChars;
+//		mbstowcs_s(&ConvertedChars, buf, xbuf, s - xbuf);
+//		return buf;
+//	}	
+//};
+
+inline double FixedDigit1(double d)
+{
+	return 0.1 * floor((0.05 + d) * 10);
+}
 
 template<int NUM>struct Wchar_from<float, NUM>
 {

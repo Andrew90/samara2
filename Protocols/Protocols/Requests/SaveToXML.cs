@@ -41,8 +41,8 @@ namespace Protocols.Requests
                 packet.TubeParty = tubeParty;
                 packet.Tubes = new List<Tube>();
                 double x = 0;
-                Regex regex = new Regex(@"(.+\,.)");
-                Match match;
+             //   Regex regex = new Regex(@"(.+\,.)");
+             //   Match match;
                 while (reader.Read())
                 {
                     Tube tube = new Tube();
@@ -58,20 +58,10 @@ namespace Protocols.Requests
                     {
                         Zone zone = new Zone();
 
-                        x = BitConverter.ToDouble(tmpBuf0, i * sizeof(double));
-                        match = regex.Match(x.ToString());
-                        if (match.Success)
-                        {
-                            x = Convert.ToDouble(match.Groups[1].Value);
-                        }
-                        zone.MinVal = x;
-                        x = BitConverter.ToDouble(tmpBuf1, i * sizeof(double));
-                        match = regex.Match(x.ToString());
-                        if (match.Success)
-                        {
-                            x = Convert.ToDouble(match.Groups[1].Value);
-                        }
-                        zone.MaxVal = x;
+                        x = BitConverter.ToDouble(tmpBuf0, i * sizeof(double));                       
+                        zone.MinVal = Math.Round(x, 1);
+                        x = BitConverter.ToDouble(tmpBuf1, i * sizeof(double));                       
+                        zone.MaxVal = Math.Round(x, 1);
                         if (1000 == zone.MinVal) zone.MinVal = 0;
                         if (-1 == zone.MaxVal) zone.MaxVal = 0;
 

@@ -15,6 +15,7 @@ void StatusZoneThickness(int offs, double &data, int zone, double (&maxThreshold
 {
 	double min = nominalTreshold[zone] - minThreshold[zone];
 	double max = nominalTreshold[zone] + maxThreshold[zone];
+	data = FixedDigit1(data);
 	if(0.0 == data)
 	{
 		status = StatusId<Clr<Undefined>>();

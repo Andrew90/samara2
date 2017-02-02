@@ -661,8 +661,8 @@ namespace Protocols.Requests
                     , 145
                 };
 
-                Regex regex = new Regex(@"(.+\,.)");
-                Match match;
+                //Regex regex = new Regex(@"(.+\,.)");
+                //Match match;
 
                 while (reader.Read())
                 {
@@ -765,25 +765,15 @@ namespace Protocols.Requests
                     {
                         minBuf[i] = BitConverter.ToDouble(tmpBuf, i * sizeof(double));
                     }
-                    double x = FindMin(n0, n1, n2, n3, minBuf, count);
-                    match = regex.Match(x.ToString());
-                    if (match.Success)
-                    {
-                        x = Convert.ToDouble(match.Groups[1].Value);
-                    }
-                    packet.MinThickness = x.ToString();
+                    double x = FindMin(n0, n1, n2, n3, minBuf, count);                    
+                    packet.MinThickness = Math.Round(x, 1).ToString();
                     reader.GetBytes(8, 0, tmpBuf, 0, bytesCount);
                     for (int i = 0; i < count; ++i)
                     {
                         maxBuf[i] = BitConverter.ToDouble(tmpBuf, i * sizeof(double));
                     }
-                    x = FindMax(n0, n1, n2, n3, maxBuf, count);
-                    match = regex.Match(x.ToString());
-                    if (match.Success)
-                    {
-                        x = Convert.ToDouble(match.Groups[1].Value);
-                    }
-                    packet.MaxThickness = x.ToString();
+                    x = FindMax(n0, n1, n2, n3, maxBuf, count);                   
+                    packet.MaxThickness = Math.Round(x, 1).ToString();
                     //-минимум максимум в зоне конец
                     t.Add(packet);
                 }
